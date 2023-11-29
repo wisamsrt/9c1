@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classroom Management System</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    header {
+      background-color: #3498db;
+      color: #fff;
+      text-align: center;
+      padding: 1em 0;
+    }
+
+    section {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    #students-list {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .student {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+      padding: 8px 0;
+    }
+
+    #add-student-form {
+      margin-top: 20px;
+    }
+
+    input[type="text"], input[type="password"], input[type="submit"] {
+      margin-bottom: 10px;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #e74c3c;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Classroom Management System</h1>
+  </header>
+
+  <section>
+    <h2>Students List</h2>
+    <ul id="students-list"></ul>
+
+    <form id="add-student-form">
+      <h2>Add Student</h2>
+      <input type="text" id="student-name" placeholder="Student Name" required>
+      <input type="text" id="student-id" placeholder="Student ID" required>
+      <input type="password" id="teacher-password" placeholder="Teacher Password" required>
+      <input type="submit" value="Add Student">
+    </form>
+  </section>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const studentsList = document.getElementById("students-list");
+      const addStudentForm = document.getElementById("add-student-form");
+
+      // Dummy student data for illustration
+      const studentsData = [
+        { name: "Student 1", id: "12345" },
+        { name: "Student 2", id: "67890" },
+      ];
+
+      // Initial students list
+      studentsData.forEach(student => {
+        appendStudentToList(student);
+      });
+
+      // Event listener for adding a student
+      addStudentForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const studentName = document.getElementById("student-name").value;
+        const studentID = document.getElementById("student-id").value;
+        const teacherPassword = document.getElementById("teacher-password").value;
+
+        // Dummy teacher password for illustration
+        const correctPassword = "9cwisam";
+
+        // Check if the teacher password is correct
+        if (teacherPassword === correctPassword) {
+          const newStudent = { name: studentName, id: studentID };
+          appendStudentToList(newStudent);
+
+          // Clear the form
+          addStudentForm.reset();
+        } else {
+          alert("Incorrect teacher password. Please try again.");
+        }
+      });
+
+      // Function to append a student to the list
+      function appendStudentToList(student) {
+        const studentItem = document.createElement("li");
+        studentItem.className = "student";
+        studentItem.innerHTML = `
+          <span>${student.name} - ${student.id}</span>
+          <button onclick="removeStudent(this)">Remove</button>
+        `;
+        studentsList.appendChild(studentItem);
+      }
+
+      // Function to remove a student from the list
+      window.removeStudent = function (button) {
+        const studentItem = button.parentNode;
+        studentsList.removeChild(studentItem);
+      };
+    });
+  </script>
+
+</body>
+</html>
